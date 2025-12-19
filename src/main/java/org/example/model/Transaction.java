@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "transactions")
 public class Transaction {
+// commit test line
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
