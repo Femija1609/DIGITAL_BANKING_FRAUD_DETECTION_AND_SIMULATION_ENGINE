@@ -10,161 +10,95 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "transaction_id")
     private String transactionId;
-
-    @Column(name = "txn_timestamp")
     private String timestamp;
 
     private Double amount;
-
     private String currency;
 
-    @Column(name = "sender_account")
     private String senderAccount;
-
-    @Column(name = "receiver_account")
     private String receiverAccount;
 
-    @Column(name = "transaction_type")
     private String transactionType;
-
     private String channel;
 
-    @Column(name = "device_id")
     private String deviceId;
-
     private String location;
-
-    @Column(name = "ip_address")
     private String ipAddress;
 
-    @Column(name = "success_status")
     private Boolean successStatus;
 
-    // NOT stored in DB, only used in API response
-    @Transient
-    private String fraudReason;
+    private String userEmail;
+    private String userMobile;
 
-    // ===== Constructors =====
+    // FRAUD FIELDS
+    private String fraudStatus;
+    private Integer riskScore;
+    private String fraudReasons;
 
-    public Transaction() {
-    }
+    // NEW STATUS FIELDS
+    private String status;           // SUCCESS / FAILED / PENDING
+    private String statusReason;     // reason if failed
 
-    // (Optional) you can add more constructors if needed
+    public Transaction() {}
 
+    public Long getId() { return id; }
 
-    // ===== Getters & Setters =====
+    public String getTransactionId() { return transactionId; }
+    public void setTransactionId(String transactionId) { this.transactionId = transactionId; }
 
-    public Long getId() {
-        return id;
-    }
+    public String getTimestamp() { return timestamp; }
+    public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Double getAmount() { return amount; }
+    public void setAmount(Double amount) { this.amount = amount; }
 
-    public String getTransactionId() {
-        return transactionId;
-    }
+    public String getCurrency() { return currency; }
+    public void setCurrency(String currency) { this.currency = currency; }
 
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
+    public String getSenderAccount() { return senderAccount; }
+    public void setSenderAccount(String senderAccount) { this.senderAccount = senderAccount; }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
+    public String getReceiverAccount() { return receiverAccount; }
+    public void setReceiverAccount(String receiverAccount) { this.receiverAccount = receiverAccount; }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
+    public String getTransactionType() { return transactionType; }
+    public void setTransactionType(String transactionType) { this.transactionType = transactionType; }
 
-    public Double getAmount() {
-        return amount;
-    }
+    public String getChannel() { return channel; }
+    public void setChannel(String channel) { this.channel = channel; }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
+    public String getDeviceId() { return deviceId; }
+    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
 
-    public String getCurrency() {
-        return currency;
-    }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
+    public String getIpAddress() { return ipAddress; }
+    public void setIpAddress(String ipAddress) { this.ipAddress = ipAddress; }
 
-    public String getSenderAccount() {
-        return senderAccount;
-    }
+    public Boolean getSuccessStatus() { return successStatus; }
+    public void setSuccessStatus(Boolean successStatus) { this.successStatus = successStatus; }
 
-    public void setSenderAccount(String senderAccount) {
-        this.senderAccount = senderAccount;
-    }
+    public String getUserEmail() { return userEmail; }
+    public void setUserEmail(String userEmail) { this.userEmail = userEmail; }
 
-    public String getReceiverAccount() {
-        return receiverAccount;
-    }
+    public String getUserMobile() { return userMobile; }
+    public void setUserMobile(String userMobile) { this.userMobile = userMobile; }
 
-    public void setReceiverAccount(String receiverAccount) {
-        this.receiverAccount = receiverAccount;
-    }
+    public String getFraudStatus() { return fraudStatus; }
+    public void setFraudStatus(String fraudStatus) { this.fraudStatus = fraudStatus; }
 
-    public String getTransactionType() {
-        return transactionType;
-    }
+    public Integer getRiskScore() { return riskScore; }
+    public void setRiskScore(Integer riskScore) { this.riskScore = riskScore; }
 
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
-    }
+    public String getFraudReasons() { return fraudReasons; }
+    public void setFraudReasons(String fraudReasons) { this.fraudReasons = fraudReasons; }
 
-    public String getChannel() {
-        return channel;
-    }
+    // NEW GETTERS + SETTERS
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public void setChannel(String channel) {
-        this.channel = channel;
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getIpAddress() {
-        return ipAddress;
-    }
-
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
-    }
-
-    public Boolean getSuccessStatus() {
-        return successStatus;
-    }
-
-    public void setSuccessStatus(Boolean successStatus) {
-        this.successStatus = successStatus;
-    }
-
-    public String getFraudReason() {
-        return fraudReason;
-    }
-
-    public void setFraudReason(String fraudReason) {
-        this.fraudReason = fraudReason;
-    }
+    public String getStatusReason() { return statusReason; }
+    public void setStatusReason(String statusReason) { this.statusReason = statusReason; }
 }
