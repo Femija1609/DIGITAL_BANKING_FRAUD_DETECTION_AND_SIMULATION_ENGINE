@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "transactions")
 public class Transaction {
-// commit test line
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,16 +31,22 @@ public class Transaction {
     private String userEmail;
     private String userMobile;
 
-    // FRAUD FIELDS
+    // ================= FRAUD FIELDS =================
     private String fraudStatus;
     private Integer riskScore;
     private String fraudReasons;
 
-    // NEW STATUS FIELDS
-    private String status;           // SUCCESS / FAILED / PENDING
-    private String statusReason;     // reason if failed
+    // ================= BANKING STATUS =================
+    private String status;        // SUCCESS / FAILED / PENDING
+    private String statusReason;  // reason if failed
+
+    // ================= ML FIELDS (NEW) =================
+    private Integer mlPrediction;   // 0 = Not Fraud, 1 = Fraud
+    private Double mlProbability;   // confidence score (0–1)
 
     public Transaction() {}
+
+    // ================= GETTERS & SETTERS =================
 
     public Long getId() { return id; }
 
@@ -96,10 +101,27 @@ public class Transaction {
     public String getFraudReasons() { return fraudReasons; }
     public void setFraudReasons(String fraudReasons) { this.fraudReasons = fraudReasons; }
 
-    // NEW GETTERS + SETTERS
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
     public String getStatusReason() { return statusReason; }
     public void setStatusReason(String statusReason) { this.statusReason = statusReason; }
+
+    // ================= ML GETTERS & SETTERS =================
+
+    public Integer getMlPrediction() {
+        return mlPrediction;
+    }
+
+    public void setMlPrediction(Integer mlPrediction) {
+        this.mlPrediction = mlPrediction;
+    }
+
+    public Double getMlProbability() {
+        return mlProbability;
+    }
+
+    public void setMlProbability(Double mlProbability) {
+        this.mlProbability = mlProbability;
+    }
 }
