@@ -1,151 +1,77 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
-import SummaryCards from "../components/SummaryCards";
-import FilterPanel from "../components/FilterPanel";
+
+import MetricCard from "../components/dashboard/MetricCard";
+import StatusPie from "../components/dashboard/StatusPie";
+import FraudBar from "../components/dashboard/FraudBar";
 
 export default function Dashboard() {
+  const [summary, setSummary] = useState({});
 
-  const [summary, setSummary] = useState(null);
-  const [transactions, setTransactions] = useState([]);
-
-  // ----------------------------
-  // LOAD SUMMARY
-  // ----------------------------
-  const loadSummary = async () => {
-    try {
-      const res = await api.get("/summary");
-      setSummary(res.data);
-    } catch (err) {
-      console.error("Failed to load summary", err);
-    }
+  // ===============================
+  // LOAD DASHBOARD SUMMARY
+  // ===============================
+  const loadSummary = () => {
+    api
+      .get("/transactions/summary")
+      .then((res) => setSummary(res.data))
+      .catch((err) => console.error("Summary error:", err));
   };
 
-  // ----------------------------
-  // LOAD TRANSACTIONS (FILTER / ALL)
-  // ----------------------------
-  const loadTransactions = async (filters = {}) => {
-    try {
-      const res = await api.get("/filter", { params: filters });
-      setTransactions(res.data);
-    } catch (err) {
-      console.error("Failed to load transactions", err);
-    }
-  };
-
-  // ----------------------------
-  // INITIAL LOAD
-  // ----------------------------
   useEffect(() => {
-    loadSummary();          // default summary
-    loadTransactions({});  // load ALL transactions
+    loadSummary();
   }, []);
 
-  return (
-    <div style={{ width: "100vw", minHeight: "100vh", background: "#f5f7fb" }}>
+  // ===============================
+  // GENERATE TRANSACTION (FIXED)
+  // ===============================
+  const generateTransaction = async () => {
+    try {
+      const payload = {
+        senderAccount: "ACC" + Math.floor(Math.random() * 100000),
+        receiverAccount: "ACC" + Math.floor(Math.random() * 100000),
+        amount: Math.floor(Math.random() * 100000) + 500,
+        currency: Math.random() > 0.5 ? "INR" : "USD",
+        country: Math.random() > 0.7 ? "USA" : "India",
+        channel: Math.random() > 0.5 ? "WEB" : "MOBILE",
+        transactionType: "TRANSFER",
+        deviceId: "DEV-" + Math.floor(Math.random() * 9999),
+        ipAddress: "192.168.1." + Math.floor(Math.random() * 255)
+      };
 
-      {/* LOGOUT BUTTON */}
-      <button
-        onClick={() => {
-          localStorage.removeItem("user");
-          window.location.reload();
-        }}
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          background: "red",
-          color: "white",
-          border: "none",
-          padding: "10px 14px",
-          borderRadius: "6px",
-          cursor: "pointer"
-        }}
-      >
-        Logout
+      await api.post("/transactions/simulate", payload);
+
+      // Reload summary after generation
+      loadSummary();
+
+    } catch (err) {
+      console.error("Generate transaction failed:", err);
+      alert("Backend error. Is Spring Boot running?");
+    }
+  };
+
+  return (
+    <div className="dashboard">
+
+      {/* METRIC CARDS */}
+      <div className="grid">
+        <MetricCard title="Total" value={summary.total || 0} color="var(--cyan)" />
+        <MetricCard title="Success" value={summary.success || 0} color="var(--success)" />
+        <MetricCard title="Failed" value={summary.failed || 0} color="var(--danger)" />
+        <MetricCard title="Fraud" value={summary.fraud || 0} color="var(--warning)" />
+      </div>
+
+      {/* CHARTS */}
+      <div className="chart-grid">
+        <StatusPie data={summary} />
+        <FraudBar data={summary} />
+      </div>
+
+      {/* GENERATE TRANSACTION */}
+      <button className="generate-btn" onClick={generateTransaction}>
+        Generate Transaction
       </button>
 
-      <div style={{ maxWidth: "1400px", margin: "auto", padding: "20px" }}>
-
-        <h2 style={{ color: "#0d47a1", marginBottom: "10px" }}>
-          💳 Digital Banking Fraud Detection Dashboard
-        </h2>
-
-        {/* SUMMARY CARDS */}
-        {summary && <SummaryCards summary={summary} />}
-
-        {/* FILTER PANEL */}
-        <FilterPanel onSearch={loadTransactions} />
-
-        {/* TRANSACTION TABLE */}
-        <div style={{ overflowX: "auto" }}>
-          <table
-            border="1"
-            width="100%"
-            style={{
-              borderCollapse: "collapse",
-              background: "white"
-            }}
-          >
-            <thead>
-              <tr>
-                <th style={th}>Txn ID</th>
-                <th style={th}>Sender</th>
-                <th style={th}>Receiver</th>
-                <th style={th}>Amount</th>
-                <th style={th}>Currency</th>
-                <th style={th}>Status</th>
-                <th style={th}>Fraud</th>
-                <th style={th}>Risk</th>
-                <th style={th}>ML Fraud</th>
-                <th style={th}>ML Risk %</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {transactions.map((tx) => (
-                <tr key={tx.id}>
-                  <td style={td}>{tx.transactionId}</td>
-                  <td style={td}>{tx.senderAccount}</td>
-                  <td style={td}>{tx.receiverAccount}</td>
-                  <td style={td}>{tx.amount}</td>
-                  <td style={td}>{tx.currency}</td>
-                  <td style={td}>{tx.status}</td>
-                  <td style={td}>{tx.fraudStatus}</td>
-                  <td style={td}>{tx.riskScore}</td>
-
-                  {/* ML RESULT */}
-                  <td style={{ ...td, fontWeight: "bold" }}>
-                    {tx.mlPrediction === 1 ? "YES" : "NO"}
-                  </td>
-
-                  <td style={td}>
-                    {tx.mlProbability !== null && tx.mlProbability !== undefined
-                      ? (tx.mlProbability * 100).toFixed(2) + "%"
-                      : "-"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-      </div>
     </div>
   );
 }
-
-// ----------------------------
-// STYLES
-// ----------------------------
-const th = {
-  padding: "10px",
-  background: "#eeeeee",
-  color: "black",
-  textAlign: "center"
-};
-
-const td = {
-  padding: "8px",
-  color: "black",
-  textAlign: "center"
-};

@@ -1,69 +1,53 @@
-export default function Login({ setUser }) {
+import { useState } from "react";
+import api from "../services/api";
 
-  const handleLogin = () => {
-    const user = { username: "admin" };
-    localStorage.setItem("user", JSON.stringify(user));
-    setUser(user);
+export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const res = await api.post("/auth/login", {
+        username,
+        password,
+      });
+
+      if (res.data) {
+        localStorage.setItem("token", "demo-token"); // demo token
+        window.location.href = "/";
+      } else {
+        alert("Invalid credentials");
+      }
+    } catch (err) {
+      alert("Login failed");
+    }
   };
 
   return (
-    <div style={{
-      width: "100vw",
-      height: "100vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      background: "#0d47a1"
-    }}>
-      <div style={{
-        background: "white",
-        padding: "40px",
-        borderRadius: "10px",
-        width: "100%",
-        maxWidth: "380px",
-        boxShadow: "0 6px 25px rgba(0,0,0,0.3)"
-      }}>
-        <h2 style={{
-          textAlign: "center",
-          color: "#0d47a1",
-          marginBottom: "20px"
-        }}>
-          Digital Banking Login
+    <div className="login-page">
+      <div className="login-box">
+        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+          🔐 Login
         </h2>
 
         <input
           placeholder="Username"
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "14px",
-            fontSize: "16px"
-          }}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          style={{ width: "100%", marginBottom: "12px" }}
         />
 
         <input
           type="password"
           placeholder="Password"
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "20px",
-            fontSize: "16px"
-          }}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={{ width: "100%", marginBottom: "20px" }}
         />
 
         <button
+          style={{ width: "100%" }}
           onClick={handleLogin}
-          style={{
-            width: "100%",
-            padding: "12px",
-            background: "#0d47a1",
-            color: "white",
-            border: "none",
-            borderRadius: "6px",
-            fontSize: "16px",
-            cursor: "pointer"
-          }}
         >
           Login
         </button>

@@ -1,0 +1,15 @@
+:root {
+  --bg-main: #0b1020;
+  --bg-card: rgba(255, 255, 255, 0.06);
+  --border-glass: rgba(255, 255, 255, 0.12);
+
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  --cyan: #22d3ee;
+  --violet: #8b5cf6;
+}
