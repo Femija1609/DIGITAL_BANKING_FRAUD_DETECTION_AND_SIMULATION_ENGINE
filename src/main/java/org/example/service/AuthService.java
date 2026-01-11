@@ -13,14 +13,21 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
+    // ============================
+    // REGISTER
+    // ============================
     public User register(User user) {
         user.setRole("USER");
         return userRepository.save(user);
     }
 
-    public User login(String username, String password) {
+    // ============================
+    // LOGIN (AUTHENTICATION)
+    // ============================
+    public User authenticate(String username, String password) {
+
         return userRepository.findByUsername(username)
-                .filter(u -> u.getPassword().equals(password))
+                .filter(u -> u.getPassword().equals(password)) // (plain-text for now)
                 .orElse(null);
     }
 }

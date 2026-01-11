@@ -59,7 +59,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     );
 
     // =================================================
-    // SUMMARY DASHBOARD SUPPORT
+    // SUMMARY DASHBOARD SUPPORT (MANDATORY)
     // =================================================
 
     long countByStatus(String status);

@@ -7,42 +7,44 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
-// commit test line
 
     private final JavaMailSender mailSender;
 
-    // Constructor Injection
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
 
-    /**
-     * Sends an alert email when a transaction is
-     * marked as SUSPICIOUS or FRAUD.
-     */
     public void sendFraudAlert(Transaction tx) {
 
-        SimpleMailMessage message = new SimpleMailMessage();
+        if (tx.getUserEmail() == null || tx.getUserEmail().isBlank()) {
+            System.out.println("⚠ Email not sent: User email missing");
+            return;
+        }
 
-        // Receiver email
-        message.setTo(tx.getUserEmail());
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(tx.getUserEmail());
+            message.setSubject("🚨 FRAUD ALERT – Suspicious Transaction Detected");
 
-        // Subject
-        message.setSubject("⚠️ ALERT: Suspicious Banking Transaction");
+            message.setText(
+                    "Dear Customer,\n\n" +
+                            "A transaction has been flagged as FRAUD.\n\n" +
+                            "Transaction ID : " + tx.getTransactionId() + "\n" +
+                            "Amount         : " + tx.getAmount() + " " + tx.getCurrency() + "\n" +
+                            "Risk Score     : " + tx.getRiskScore() + "\n" +
+                            "Location       : " + tx.getLocation() + "\n" +
+                            "Channel        : " + tx.getChannel() + "\n\n" +
+                            "If this was NOT you, contact the bank immediately.\n\n" +
+                            "Regards,\n" +
+                            "Digital Banking Security Team"
+            );
 
-        // Email content
-        message.setText(
-                "Dear Customer,\n\n" +
-                        "Your transaction has been flagged as " + tx.getFraudStatus() + ".\n\n" +
-                        "Transaction ID : " + tx.getTransactionId() + "\n" +
-                        "Amount         : " + tx.getAmount() + " " + tx.getCurrency() + "\n" +
-                        "Reason         : " + tx.getFraudReasons() + "\n\n" +
-                        "If this was NOT you, please contact the bank immediately.\n\n" +
-                        "Regards,\n" +
-                        "Digital Banking Security Team"
-        );
+            mailSender.send(message);
+            System.out.println("✅ Fraud alert email sent to " + tx.getUserEmail());
 
-        // Send email
-        mailSender.send(message);
+        } catch (Exception e) {
+            System.out.println("❌ Email sending failed");
+            e.printStackTrace();
+        }
     }
 }

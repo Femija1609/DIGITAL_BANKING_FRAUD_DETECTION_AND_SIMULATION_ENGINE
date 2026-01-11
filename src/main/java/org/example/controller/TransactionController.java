@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import org.example.dto.TransactionDashboardDTO;
+import org.example.dto.TransactionSimulateRequest;
 import org.example.model.Transaction;
 import org.example.repository.TransactionRepository;
 import org.example.service.TransactionService;
@@ -22,31 +24,50 @@ public class TransactionController {
         this.transactionRepository = transactionRepository;
     }
 
-    // ✅ ADD THIS METHOD (ONLY THIS IS NEW)
-    @PostMapping
-    public Transaction createTransaction(@RequestBody Transaction tx) {
-        return transactionService.evaluateAndSave(tx);
-    }
-
+    // ===============================
+    // SUMMARY (DASHBOARD)
+    // ===============================
     @GetMapping("/summary")
     public Map<String, Long> summary() {
         return transactionService.summary();
     }
 
+    // ===============================
+    // ALL TRANSACTIONS (DTO)
+    // ===============================
     @GetMapping
-    public List<Transaction> getAll() {
-        return transactionRepository.findAll();
+    public List<TransactionDashboardDTO> getAll() {
+        return transactionRepository.findAll()
+                .stream()
+                .map(TransactionDashboardDTO::new)
+                .toList();
     }
 
+    // ===============================
+    // FILTER TRANSACTIONS
+    // ===============================
     @GetMapping("/filter")
-    public List<Transaction> filter(
+    public List<TransactionDashboardDTO> filter(
             @RequestParam(required = false) String senderAccount,
             @RequestParam(required = false) String receiverAccount,
             @RequestParam(required = false) String fraudStatus,
             @RequestParam(required = false) String status
     ) {
-        return transactionService.filterData(
-                senderAccount, receiverAccount, fraudStatus, status
-        );
+        return transactionService
+                .filterData(senderAccount, receiverAccount, fraudStatus, status)
+                .stream()
+                .map(TransactionDashboardDTO::new)
+                .toList();
+    }
+
+    // ===============================
+    // MANUAL TRANSACTION SIMULATION
+    // ===============================
+    @PostMapping("/simulate")
+    public TransactionDashboardDTO simulate(
+            @RequestBody TransactionSimulateRequest request) {
+
+        Transaction tx = transactionService.simulate(request);
+        return new TransactionDashboardDTO(tx);
     }
 }

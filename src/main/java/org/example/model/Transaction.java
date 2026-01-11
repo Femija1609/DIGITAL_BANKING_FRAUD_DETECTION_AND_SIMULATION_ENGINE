@@ -10,39 +10,76 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // ================= BASIC DETAILS =================
+
+    @Column(name = "transaction_id", nullable = false)
     private String transactionId;
+
+    @Column(name = "txn_timestamp")
     private String timestamp;
 
+    @Column(name = "amount")
     private Double amount;
+
+    @Column(name = "currency")
     private String currency;
 
+    @Column(name = "sender_account")
     private String senderAccount;
+
+    @Column(name = "receiver_account")
     private String receiverAccount;
 
+    @Column(name = "transaction_type")
     private String transactionType;
+
+    @Column(name = "channel")
     private String channel;
 
+    @Column(name = "device_id")
     private String deviceId;
-    private String location;
+
+    @Column(name = "location")
+    private String location;   // mapped from country
+
+    @Column(name = "ip_address")
     private String ipAddress;
 
+    @Column(name = "success_status")
     private Boolean successStatus;
 
+    @Column(name = "user_email")
     private String userEmail;
+
+    @Column(name = "user_mobile")
     private String userMobile;
 
-    // ================= FRAUD FIELDS =================
+    // ================= FRAUD DETAILS =================
+
+    @Column(name = "fraud_status")
     private String fraudStatus;
+
+    @Column(name = "risk_score")
     private Integer riskScore;
+
+    @Column(name = "fraud_reasons")
     private String fraudReasons;
 
     // ================= BANKING STATUS =================
-    private String status;        // SUCCESS / FAILED / PENDING
-    private String statusReason;  // reason if failed
 
-    // ================= ML FIELDS (NEW) =================
-    private Integer mlPrediction;   // 0 = Not Fraud, 1 = Fraud
-    private Double mlProbability;   // confidence score (0–1)
+    @Column(name = "status")
+    private String status;        // SUCCESS / FAILED / PENDING
+
+    @Column(name = "status_reason")
+    private String statusReason;
+
+    // ================= ML DETAILS =================
+
+    @Column(name = "ml_prediction")
+    private Integer mlPrediction;   // 0 / 1
+
+    @Column(name = "ml_probability")
+    private Double mlProbability;   // 0.0 – 1.0
 
     public Transaction() {}
 
@@ -107,21 +144,9 @@ public class Transaction {
     public String getStatusReason() { return statusReason; }
     public void setStatusReason(String statusReason) { this.statusReason = statusReason; }
 
-    // ================= ML GETTERS & SETTERS =================
+    public Integer getMlPrediction() { return mlPrediction; }
+    public void setMlPrediction(Integer mlPrediction) { this.mlPrediction = mlPrediction; }
 
-    public Integer getMlPrediction() {
-        return mlPrediction;
-    }
-
-    public void setMlPrediction(Integer mlPrediction) {
-        this.mlPrediction = mlPrediction;
-    }
-
-    public Double getMlProbability() {
-        return mlProbability;
-    }
-
-    public void setMlProbability(Double mlProbability) {
-        this.mlProbability = mlProbability;
-    }
+    public Double getMlProbability() { return mlProbability; }
+    public void setMlProbability(Double mlProbability) { this.mlProbability = mlProbability; }
 }
