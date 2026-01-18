@@ -8,7 +8,7 @@ export default function FraudBar({ data }) {
 
   return (
     <div className="chart-card">
-      <h3>Fraud Detection</h3>
+      <h3>FRAUD DETECTION</h3>
 
       <BarChart width={300} height={220} data={chartData}>
         <XAxis dataKey="name" />

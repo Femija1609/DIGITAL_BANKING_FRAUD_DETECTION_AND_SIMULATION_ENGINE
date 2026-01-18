@@ -13,13 +13,11 @@ export default function Transactions() {
   });
 
   const loadAll = () => {
-    api.get("/transactions").then(res => setData(res.data));
+    api.get("/transactions")
+      .then(res => setData(res.data));
   };
 
   const applyFilters = () => {
-    console.log("🟢 APPLY FILTERS:", filters);
-
-    // 🔑 REMOVE EMPTY FILTERS (VERY IMPORTANT)
     const params = {};
     Object.entries(filters).forEach(([key, value]) => {
       if (value && value.trim() !== "") {
@@ -27,27 +25,25 @@ export default function Transactions() {
       }
     });
 
-    console.log("🟡 FINAL QUERY PARAMS:", params);
-
     api
       .get("/transactions/filter", { params })
-      .then(res => {
-        console.log("🔵 FILTER RESULT:", res.data.length);
-        setData(res.data);
-      })
-      .catch(err => {
-        console.error("❌ FILTER ERROR:", err);
-        alert("Backend filter failed. Check console.");
-      });
+      .then(res => setData(res.data))
+      .catch(() => alert("Backend filter failed"));
   };
 
   useEffect(() => {
     loadAll();
+
+    // ✅ FIX: clear ONLY transaction inbox (fraudStatus = OK)
+    api.post("/notifications/mark-seen", null, {
+      params: { type: "transactions" }
+    }).catch(() => {});
   }, []);
 
   return (
     <div className="dashboard">
-      <h2>All Transactions</h2>
+      <h2>ALL TRANSACTIONS</h2>
+      <h4>FILTERS & CONTROLS ▼</h4>
 
       <TransactionFilters
         filters={filters}

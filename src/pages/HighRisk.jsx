@@ -10,19 +10,23 @@ export default function HighRisk() {
     api
       .get("/transactions")
       .then(res => {
-        // ONLY HIGH RISK TRANSACTIONS
         const highRisk = res.data.filter(
           t => t.riskScore !== null && t.riskScore >= 70
         );
         setData(highRisk);
       })
-      .catch(err => console.error("High Risk error:", err))
+      .catch(() => {})
       .finally(() => setLoading(false));
+
+    // 🔔 FIX: mark ONLY SUSPICIOUS notifications as seen
+    api.post("/notifications/mark-seen", null, {
+      params: { type: "highRisk" }
+    }).catch(() => {});
   }, []);
 
   return (
     <div className="dashboard">
-      <h2>⚠️ High Risk Transactions</h2>
+      <h2>HIGH RISK TRANSACTIONS</h2>
 
       <p style={{ color: "var(--text-muted)", marginBottom: "16px" }}>
         Transactions with <b>risk score ≥ 70</b>

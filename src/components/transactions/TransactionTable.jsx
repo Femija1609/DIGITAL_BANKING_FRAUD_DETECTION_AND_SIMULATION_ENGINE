@@ -6,7 +6,7 @@ export default function TransactionTable({ data }) {
       <table className="txn-table">
         <thead>
           <tr>
-            <th>Txn ID</th>
+            <th>Transaction ID</th>
             <th>Sender</th>
             <th>Receiver</th>
             <th>Amount</th>
@@ -14,16 +14,20 @@ export default function TransactionTable({ data }) {
             <th>Fraud</th>
             <th>Risk</th>
             <th>ML %</th>
+            <th>Email</th> {/* ✅ NEW COLUMN */}
           </tr>
         </thead>
 
         <tbody>
-          {data.map(tx => (
+          {data.map((tx) => (
             <tr key={tx.id}>
               <td>{tx.transactionId}</td>
               <td>{tx.senderAccount}</td>
               <td>{tx.receiverAccount}</td>
-              <td>₹{tx.amount}</td>
+              <td>
+                {tx.currency === "USD" ? "$" : "₹"}
+                {tx.amount}
+              </td>
 
               <td>
                 <Badge value={tx.status} />
@@ -45,6 +49,13 @@ export default function TransactionTable({ data }) {
                 }}
               >
                 {Math.round((tx.mlProbability || 0) * 100)}%
+              </td>
+
+              {/* ✅ EMAIL SENT / NOT */}
+              <td>
+                <Badge
+                  value={tx.emailSent ? "YES" : "NO"}
+                />
               </td>
             </tr>
           ))}

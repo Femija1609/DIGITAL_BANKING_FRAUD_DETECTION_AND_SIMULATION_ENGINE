@@ -11,7 +11,7 @@ export default function StatusPie({ data }) {
 
   return (
     <div className="chart-card">
-      <h3>Transaction Status</h3>
+      <h3>TRANSACTION STATUS</h3>
 
       <PieChart width={260} height={260}>
         <Pie

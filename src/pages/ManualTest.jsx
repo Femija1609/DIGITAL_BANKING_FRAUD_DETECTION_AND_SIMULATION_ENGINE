@@ -56,7 +56,7 @@ export default function ManualTest() {
 
   return (
     <div className="dashboard">
-      <h2>🧪 Manual Transaction Simulator</h2>
+      <h2>MANUAL TRANSACTION SIMULATOR AND TESTER</h2>
       <p>Simulate a transaction and observe fraud detection in real time</p>
 
       <div className="sim-form">
@@ -123,13 +123,13 @@ export default function ManualTest() {
         />
 
         <button onClick={simulateTransaction} disabled={loading}>
-          {loading ? "Simulating..." : "Simulate Transaction"}
+          {loading ? "Simulating..." : "SIMULATE TRANSACTION"}
         </button>
       </div>
 
       {result && (
         <div className="result-box">
-          <h3>🧾 Simulation Result</h3>
+          <h3>SIMULATION RESULT</h3>
 
           <h4>Transaction Details</h4>
           <p><b>Transaction ID:</b> {result.transactionId}</p>

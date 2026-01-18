@@ -55,10 +55,10 @@ export default function Dashboard() {
 
       {/* METRIC CARDS */}
       <div className="grid">
-        <MetricCard title="Total" value={summary.total || 0} color="var(--cyan)" />
-        <MetricCard title="Success" value={summary.success || 0} color="var(--success)" />
-        <MetricCard title="Failed" value={summary.failed || 0} color="var(--danger)" />
-        <MetricCard title="Fraud" value={summary.fraud || 0} color="var(--warning)" />
+        <MetricCard title="TOTAL" value={summary.total || 0} color="var(--cyan)" />
+        <MetricCard title="SUCCESS" value={summary.success || 0} color="var(--success)" />
+        <MetricCard title="FAILED" value={summary.failed || 0} color="var(--danger)" />
+        <MetricCard title="FRAUD" value={summary.fraud || 0} color="var(--warning)" />
       </div>
 
       {/* CHARTS */}
@@ -69,7 +69,7 @@ export default function Dashboard() {
 
       {/* GENERATE TRANSACTION */}
       <button className="generate-btn" onClick={generateTransaction}>
-        Generate Transaction
+        GENERATE TRANSACTION
       </button>
 
     </div>

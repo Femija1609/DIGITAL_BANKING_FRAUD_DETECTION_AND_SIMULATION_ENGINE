@@ -27,7 +27,7 @@ export default function Login() {
     <div className="login-page">
       <div className="login-box">
         <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-          🔐 Login
+          LOGIN
         </h2>
 
         <input
@@ -49,7 +49,7 @@ export default function Login() {
           style={{ width: "100%" }}
           onClick={handleLogin}
         >
-          Login
+          LOGIN
         </button>
       </div>
     </div>
