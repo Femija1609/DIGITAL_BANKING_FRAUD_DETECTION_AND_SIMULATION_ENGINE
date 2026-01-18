@@ -56,13 +56,13 @@ export default function Sidebar() {
       </NavLink>
 
       <NavLink to="/high-risk" className="nav-item">
-        HIGH RISK
+        RISKY TNX DATA
         {counts.highRisk > 0 && (
           <span className="badge badge-warning">{counts.highRisk}</span>
         )}
       </NavLink>
 
-      <NavLink to="/manual-test" className="nav-item">MANUAL TEST</NavLink>
+      <NavLink to="/manual-test" className="nav-item">TEST BY SIMULATE</NavLink>
 
       <button className="logout-btn" onClick={logout}>
         LOGOUT
