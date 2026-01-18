@@ -26,12 +26,15 @@ public class TransactionDashboardDTO {
     private String fraudStatus;
     private Integer riskScore;
 
+    // ✅ NEW: FRAUD / HIGH RISK REASON
+    private String fraudReasons;
+
     private Integer mlPrediction;
     private Double mlProbability;
 
-    // =====================
-    // CONSTRUCTOR
-    // =====================
+    // ================= EMAIL =================
+    private Boolean emailSent;
+
     public TransactionDashboardDTO(Transaction tx) {
         this.id = tx.getId();
         this.transactionId = tx.getTransactionId();
@@ -39,7 +42,6 @@ public class TransactionDashboardDTO {
 
         this.senderAccount = tx.getSenderAccount();
         this.receiverAccount = tx.getReceiverAccount();
-
         this.amount = tx.getAmount();
         this.currency = tx.getCurrency();
 
@@ -55,36 +57,37 @@ public class TransactionDashboardDTO {
         this.fraudStatus = tx.getFraudStatus();
         this.riskScore = tx.getRiskScore();
 
+        // ✅ MAP REASON FROM ENTITY
+        this.fraudReasons = tx.getFraudReasons();
+
         this.mlPrediction = tx.getMlPrediction();
         this.mlProbability = tx.getMlProbability();
+
+        this.emailSent = tx.getEmailSent();
     }
 
-    // =====================
-    // GETTERS
-    // =====================
-
+    // ===== GETTERS =====
     public Long getId() { return id; }
     public String getTransactionId() { return transactionId; }
     public String getTimestamp() { return timestamp; }
-
     public String getSenderAccount() { return senderAccount; }
     public String getReceiverAccount() { return receiverAccount; }
-
     public Double getAmount() { return amount; }
     public String getCurrency() { return currency; }
-
     public String getChannel() { return channel; }
     public String getLocation() { return location; }
     public String getTransactionType() { return transactionType; }
     public String getDeviceId() { return deviceId; }
     public String getIpAddress() { return ipAddress; }
-
     public String getStatus() { return status; }
     public String getStatusReason() { return statusReason; }
-
     public String getFraudStatus() { return fraudStatus; }
     public Integer getRiskScore() { return riskScore; }
 
+    // ✅ NEW GETTER
+    public String getFraudReasons() { return fraudReasons; }
+
     public Integer getMlPrediction() { return mlPrediction; }
     public Double getMlProbability() { return mlProbability; }
+    public Boolean getEmailSent() { return emailSent; }
 }

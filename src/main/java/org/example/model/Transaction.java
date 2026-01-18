@@ -40,7 +40,7 @@ public class Transaction {
     private String deviceId;
 
     @Column(name = "location")
-    private String location;   // mapped from country
+    private String location;
 
     @Column(name = "ip_address")
     private String ipAddress;
@@ -68,7 +68,7 @@ public class Transaction {
     // ================= BANKING STATUS =================
 
     @Column(name = "status")
-    private String status;        // SUCCESS / FAILED / PENDING
+    private String status;
 
     @Column(name = "status_reason")
     private String statusReason;
@@ -76,10 +76,18 @@ public class Transaction {
     // ================= ML DETAILS =================
 
     @Column(name = "ml_prediction")
-    private Integer mlPrediction;   // 0 / 1
+    private Integer mlPrediction;
 
     @Column(name = "ml_probability")
-    private Double mlProbability;   // 0.0 – 1.0
+    private Double mlProbability;
+
+    // ================= EMAIL NOTIFICATION (FEATURE 1) =================
+
+    @Column(name = "email_sent")
+    private Boolean emailSent;
+
+    @Column(name = "email_seen")
+    private Boolean emailSeen;
 
     public Transaction() {}
 
@@ -149,4 +157,11 @@ public class Transaction {
 
     public Double getMlProbability() { return mlProbability; }
     public void setMlProbability(Double mlProbability) { this.mlProbability = mlProbability; }
+
+    // ===== Email flags =====
+    public Boolean getEmailSent() { return emailSent; }
+    public void setEmailSent(Boolean emailSent) { this.emailSent = emailSent; }
+
+    public Boolean getEmailSeen() { return emailSeen; }
+    public void setEmailSeen(Boolean emailSeen) { this.emailSeen = emailSeen; }
 }

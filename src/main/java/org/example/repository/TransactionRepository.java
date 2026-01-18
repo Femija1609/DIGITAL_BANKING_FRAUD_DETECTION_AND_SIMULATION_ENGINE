@@ -12,8 +12,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     // =================================================
     // FRAUD RULE SUPPORT (TIME WINDOW QUERIES)
     // =================================================
-
-    // Count transactions for sender in time window
     @Query("""
         SELECT COUNT(t)
         FROM Transaction t
@@ -27,7 +25,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             @Param("to") String to
     );
 
-    // Count failed transactions for sender in time window
     @Query("""
         SELECT COUNT(t)
         FROM Transaction t
@@ -42,10 +39,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             @Param("to") String to
     );
 
-    // Find latest transaction for sender
     List<Transaction> findTop1BySenderAccountOrderByIdDesc(String senderAccount);
 
-    // Transactions since a given timestamp (device rule)
     @Query("""
         SELECT t
         FROM Transaction t
@@ -59,10 +54,24 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     );
 
     // =================================================
-    // SUMMARY DASHBOARD SUPPORT (MANDATORY)
+    // DASHBOARD SUMMARY SUPPORT
     // =================================================
-
     long countByStatus(String status);
 
     long countByFraudStatus(String fraudStatus);
+
+    // =================================================
+    // 🔔 NOTIFICATION / INBOX SUPPORT (FINAL & CORRECT)
+    // =================================================
+
+    /**
+     * 🟢 Transactions inbox (umbrella)
+     */
+    long countByEmailSentTrueAndEmailSeenFalse();
+
+    /**
+     * 🔴 Fraud inbox → FRAUD
+     * 🟡 High Risk inbox → SUSPICIOUS
+     */
+    long countByFraudStatusAndEmailSentTrueAndEmailSeenFalse(String fraudStatus);
 }
