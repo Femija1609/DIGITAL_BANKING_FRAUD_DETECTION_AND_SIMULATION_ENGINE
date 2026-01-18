@@ -49,7 +49,7 @@ export default function TransactionFilters({ filters, setFilters, onApply }) {
       </select>
 
       <button onClick={onApply}>
-        Apply
+        APPLY
       </button>
 
     </div>

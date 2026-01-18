@@ -1,21 +1,45 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid
+} from "recharts";
 
 export default function FraudBar({ data }) {
   const chartData = [
-    { name: "Fraud", value: data.fraud || 0 },
-    { name: "Suspicious", value: data.suspicious || 0 },
+    { name: "SUCCESS", value: data.success || 0 },
+    { name: "PENDING", value: data.pending || 0 },
+    { name: "FAILED", value: data.failed || 0 },
+    { name: "FRAUD", value: data.fraud || 0 },
   ];
 
   return (
     <div className="chart-card">
-      <h3>FRAUD DETECTION</h3>
+      <h3> TRANSACTION TREND</h3>
 
-      <BarChart width={300} height={220} data={chartData}>
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Bar dataKey="value" fill="#ef4444" />
-      </BarChart>
+      {/* ✅ FIX: wrapper that actually moves the chart */}
+      <div className="line-chart-shift">
+        <ResponsiveContainer width="100%" height={260}>
+          <LineChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+            <XAxis dataKey="name" stroke="var(--text-muted)" />
+            <YAxis stroke="var(--text-muted)" />
+            <Tooltip />
+
+            <Line
+              type="monotone"
+              dataKey="value"
+              stroke="var(--cyan)"
+              strokeWidth={3}
+              dot={{ r: 5 }}
+              activeDot={{ r: 7 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }

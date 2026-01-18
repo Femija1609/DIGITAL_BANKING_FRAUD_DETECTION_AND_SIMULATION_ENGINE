@@ -39,7 +39,7 @@ export default function Sidebar() {
     <aside className="sidebar">
       <h2 className="logo">PAY-WATCH 🔰</h2>
 
-      <NavLink to="/" className="nav-item">DASHBOARD</NavLink>
+      <NavLink to="/" className="nav-item">CORE VIEW</NavLink>
 
       <NavLink to="/transactions" className="nav-item">
         TRANSACTIONS
