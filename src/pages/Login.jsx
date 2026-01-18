@@ -26,6 +26,10 @@ export default function Login() {
   return (
     <div className="login-page">
       <div className="login-box">
+          <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+
+                    PAY-WATCH 🔰
+                  </h2>
         <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
           LOGIN
         </h2>
