@@ -17,7 +17,7 @@ public class Transaction {
 
     @Column(name = "txn_timestamp")
     private String timestamp;
-
+    //update
     @Column(name = "amount")
     private Double amount;
 

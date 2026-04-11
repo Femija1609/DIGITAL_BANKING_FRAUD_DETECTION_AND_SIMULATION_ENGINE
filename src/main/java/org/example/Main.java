@@ -16,7 +16,7 @@ public class Main {
     private static final String DB_PASSWORD = "Femii..16"; // change if needed
 
     public static void main(String[] args) {
-
+//update
         // Generate fake transaction data
         String transactionId = UUID.randomUUID().toString();
         String timestamp = LocalDateTime.now().toString();
