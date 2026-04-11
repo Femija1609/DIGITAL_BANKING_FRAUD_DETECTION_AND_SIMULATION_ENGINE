@@ -11,7 +11,7 @@ public class Transaction {
     private Long id;
 
     // ================= BASIC DETAILS =================
-
+//update
     @Column(name = "transaction_id", nullable = false)
     private String transactionId;
 

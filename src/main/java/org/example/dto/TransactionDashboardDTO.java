@@ -19,7 +19,7 @@ public class TransactionDashboardDTO {
     private String transactionType;
     private String deviceId;
     private String ipAddress;
-
+//update
     private String status;
     private String statusReason;
 
