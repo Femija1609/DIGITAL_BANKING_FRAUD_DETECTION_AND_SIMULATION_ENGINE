@@ -25,6 +25,7 @@ export default function Transactions() {
       }
     });
 
+
     api
       .get("/transactions/filter", { params })
       .then(res => setData(res.data))

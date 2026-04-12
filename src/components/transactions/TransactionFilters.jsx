@@ -37,6 +37,7 @@ export default function TransactionFilters({ filters, setFilters, onApply }) {
         <option value="FRAUD">FRAUD</option>
       </select>
 
+
       <select
         name="status"
         value={filters.status}

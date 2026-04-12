@@ -63,6 +63,7 @@ export default function Dashboard() {
         <MetricCard title="FRAUD" value={summary.fraud || 0} color="var(--warning)" />
       </div>
 
+
       {/* ================= CHARTS + SIDE CARD ================= */}
       <div
         className="chart-grid"

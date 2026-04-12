@@ -108,6 +108,7 @@ export default function ManualTest() {
           <option value="CARD">CARD</option>
         </select>
 
+
         <input
           name="deviceId"
           placeholder="Device ID (e.g., DEV-1001)"

@@ -18,6 +18,7 @@ export default function TransactionTable({ data }) {
           </tr>
         </thead>
 
+
         <tbody>
           {data.map((tx) => (
             <tr key={tx.id}>

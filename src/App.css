@@ -132,6 +132,7 @@ html, body, #root {
   cursor: pointer;
 }
 
+
 .generate-btn:hover {
   box-shadow: 0 8px 20px rgba(34, 211, 238, 0.4);
   transform: translateY(-2px);

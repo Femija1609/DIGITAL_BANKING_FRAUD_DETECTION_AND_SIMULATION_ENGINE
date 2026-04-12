@@ -6,6 +6,7 @@ export default function HighRisk() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     api
       .get("/transactions")

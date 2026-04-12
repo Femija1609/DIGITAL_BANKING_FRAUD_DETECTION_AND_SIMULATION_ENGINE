@@ -12,6 +12,7 @@ export default function FraudAlerts() {
       params: { type: "fraud" }
     }).catch(() => {});
 
+
     api
       .get("/transactions/filter", {
         params: { fraudStatus: "FRAUD" }
