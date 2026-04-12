@@ -14,3 +14,4 @@ export default function Badge({ type, value }) {
     </span>
   );
 }
+
