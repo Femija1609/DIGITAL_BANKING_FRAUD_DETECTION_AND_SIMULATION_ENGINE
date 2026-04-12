@@ -12,6 +12,7 @@ export default function Login() {
         password,
       });
 
+
       if (res.data) {
         localStorage.setItem("token", "demo-token"); // demo token
         window.location.href = "/";
